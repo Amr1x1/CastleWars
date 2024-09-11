@@ -1,28 +1,11 @@
 print("Castle Wars script")
 
 local API = require("api")
+local UTILS = require("utils")
 local firstTime = true
 local totalGames = 0
 
-local self = setmetatable({}, UTILS)
-self.afk = os.time()
-self.randomTime = math.random(180, 280)
-self.worldTime = os.time()
-self.stateFailCount = 0
-local MAX_IDLE_TIME_MINUTES = 8
 
-
-local function antiIdle()
-    math.randomseed(os.time())
-    local timeDiff = os.difftime(os.time(), self.afk)
-    local randomTime = math.random((MAX_IDLE_TIME_MINUTES * 60) * 0.6, (MAX_IDLE_TIME_MINUTES * 60) * 0.9)
-    if timeDiff > randomTime then
-      API.PIdle2()
-      self.afk = os.time()
-      return true
-    end
-    return false
-end
 
 local function isObjectThere(id)
     if API.GetAllObjArray1({ id }, 10, {0, 12})[1] ~= nil then
@@ -257,7 +240,7 @@ end
 
 
 
-antiIdle()
+UTILS:antiIdle()
 
 
 
