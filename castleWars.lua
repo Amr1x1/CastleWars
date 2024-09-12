@@ -128,9 +128,13 @@ local function goGuthixPortal()
         
         API.DoAction_Object1(0x39,API.OFF_ACT_GeneralObject_route0,{ IDS.GUTHIX_PORTAL },50)
         print("Entering portal")
-        if API.Compare2874Status(18, false) then return end
         while gameStateChecks() and not isObjectThere(IDS.WAITING_ROOM) do
             API.RandomSleep2(600, 600, 600)
+            if API.Compare2874Status(18, false) then
+                API.DoAction_Interface(0xffffffff,0xffffffff,1,985,88,-1,API.OFF_ACT_GeneralInterface_route)
+                API.RandomSleep2(800, 600, 600)
+                return
+            end
         end
         print("Waiting for game...")
     end
