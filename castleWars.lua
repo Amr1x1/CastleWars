@@ -64,6 +64,7 @@ local function goGuthixPortal()
     if isInCastleWarsLobby() and gameStateChecks() then
 
         if API.Compare2874Status(18, false) then
+            API.RandomSleep2(800,600,600)
             API.DoAction_Interface(0xffffffff,0xffffffff,1,985,88,-1,API.OFF_ACT_GeneralInterface_route)
             totalGames = totalGames + 1
             print("Total games: " .. totalGames)
@@ -192,5 +193,5 @@ UTILS:antiIdle()
 
 
 
-API.RandomSleep2(1800, 1000, 5000)
+API.RandomSleep2(2400, 1200, 10000)
 end----------------------------------------------------------------------------------
