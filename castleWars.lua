@@ -19,64 +19,8 @@ local function waitForObject(id, type)
     end
 end
 
-local function waitBankOpen()
-    while API.Read_LoopyLoop() and not API.Compare2874Status(24, false) do
-        API.RandomSleep2(600, 600, 600)
-    end
-end
-
-local function waitBankClosed()
-    while API.Read_LoopyLoop() and API.Compare2874Status(24, false) do
-        API.RandomSleep2(600, 600, 600)
-    end
-end
-
-local function waitForVB(number)
-    while API.Read_LoopyLoop() and not API.Compare2874Status(number, false) do
-        API.RandomSleep2(600, 600, 600)
-    end
-end
 
 
-
-local function waitForXpTick(skillName)
-    local currentXp = API.GetSkillXP(skillName)
-    local waitTime = 20
-    local exitLoop = false
-    local start = os.time()
-    while not exitLoop and os.time() - start < waitTime do
-        API.RandomSleep2(100,0,0)
-        local loopXp = API.GetSkillXP(skillName)
-        if math.abs(loopXp - currentXp) > 0 then
-            exitLoop = true
-            return true
-        end
-        if not API.Read_LoopyLoop() then
-            exitLoop = true
-            return false
-        end
-        if not API.PlayerLoggedIn() then
-            exitLoop = true
-            return false
-        end
-    end
-end
-
-
-local function run_to_tile(x, y, z)
-    math.randomseed(os.time())
-
-    rand1 = math.random(-1, 1)
-    rand2 = math.random(-1, 1)
-    local tile = WPOINT.new(x + rand1, y + rand2, z)
-
-    API.DoAction_WalkerW(tile)
-
-    local threshold = math.random(5, 8)
-    while API.Read_LoopyLoop() and API.Math_DistanceW(API.PlayerCoord(), tile) > threshold do
-        API.RandomSleep2(200, 200, 200)
-    end
-end
 
 local function gameStateChecks()
     if not API.Read_LoopyLoop() or not API.PlayerLoggedIn() then
